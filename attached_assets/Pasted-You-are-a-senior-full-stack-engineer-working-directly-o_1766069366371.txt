@@ -1,0 +1,89 @@
+You are a senior full-stack engineer working directly on this codebase.
+Do NOT summarize. Do NOT explain. Make REAL code changes.
+
+PROJECT CONTEXT:
+This is a student tools platform built with React + TypeScript + Vite.
+Tool data is centrally defined and reused across:
+- Landing page
+- Dashboard
+- Sidebar
+- Category pages
+- Tool cards
+
+CURRENT ISSUES TO FIX (MANDATORY):
+
+1) LANDING PAGE TOOL COUNT
+- Update all occurrences of "39 tools" to "52 tools"
+- This includes:
+  - Hero section text
+  - Buttons (e.g. “Browse All 39 Tools” → “Browse All 52 Tools”)
+  - Any stats or subtitles
+- The count MUST come from a single shared source (not hardcoded).
+
+2) SIDEBAR BUG (IMPORTANT)
+- Left sidebar shows:
+  - Dashboard
+  - All Tools
+- Currently BOTH buttons trigger the SAME route/action.
+- Fix routing so:
+  - Dashboard → /dashboard
+  - All Tools → /tools
+- Ensure both routes render different pages correctly.
+
+3) TOOL COUNT LOGIC (CRITICAL)
+- Total tools must be 52
+- Categories must auto-calculate counts from data
+- No manual numbers allowed anywhere
+- Update the central tools data file (likely tools-data.ts or similar).
+
+4) ADD NEW AI TOOL (THIS IS NEW TOOL #52)
+
+Tool name:
+- "AI YouTube Video Summarizer"
+
+Category:
+- AI Tools
+
+UI REQUIREMENTS:
+- Input field for YouTube video URL
+- “Summarize Video” button
+- Loading state
+- Error handling for invalid URLs
+- Output sections:
+  - Short summary
+  - Bullet highlights
+
+BACKEND / API RULES:
+- Use Google Gemini API
+- Read API key ONLY from environment variable:
+  process.env.GEMINI_API_KEY
+- NEVER hardcode API keys
+- Implement backend route:
+  POST /api/ai/youtube-summarize
+- Extract transcript using YouTube transcript logic or fallback text extraction
+- Send transcript to Gemini for summarization
+
+PERFORMANCE RULES:
+- Do NOT block UI
+- Use async/await
+- Show progress/loading feedback
+
+FILE-LEVEL REQUIREMENTS:
+- Modify actual React components
+- Modify actual routing files
+- Modify tools data source
+- Add new tool page under AI tools
+- Ensure it appears in:
+  - Landing page counts
+  - Dashboard counts
+  - AI tools list
+  - Search
+
+FINAL CHECKS (DO NOT SKIP):
+- Landing page shows 52 tools
+- Sidebar buttons navigate correctly
+- AI YouTube Summarizer is usable end-to-end
+- No console errors
+- App builds successfully
+
+START IMPLEMENTING NOW.

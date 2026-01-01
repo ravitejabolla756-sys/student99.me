@@ -1,0 +1,135 @@
+You are a senior frontend engineer and product designer.
+Build a complete React-based web application called “StuDENt” – a professional student productivity and tools platform.
+PROJECT OVERVIEW
+StuDENt is an all-in-one tools website for school and college students.
+It provides 39 free tools in V1 with no login and no subscription.
+Target users:
+- School students
+- College / university students
+Core principles:
+- Clean, modern, professional UI
+- Fast, frontend-only
+- Real logical workflows (not fake buttons)
+- Honest V1 feature scope
+TECH STACK
+- React (Vite or CRA)
+- Tailwind CSS (preferred) or modern CSS
+- shadcn/ui–style components
+- Frontend-only (NO backend)
+- Browser APIs and JS logic only
+GLOBAL RULES (STRICT)
+- Build everything from scratch
+- No authentication
+- No backend
+- No paid or external APIs
+- Use browser-based libraries only
+- All tools must open, accept input, process, and show output
+- No “Coming Soon” text anywhere
+UI / UX REQUIREMENTS
+1. LANDING PAGE
+- Hero section with headline:
+  “All Student Tools. One Website.”
+- Short description
+- CTA button: “Open Tools”
+- Feature highlights (Free, No Login, Fast)
+- Footer with About, Privacy Policy, Terms
+2. DASHBOARD / TOOLS PAGE
+- Clean dashboard layout
+- Top navigation bar:
+  - Logo (StuDENt)
+  - Global Search Bar (searches all tools by name & keywords)
+  - “All Tools” button
+- Left sidebar (minimal):
+  - Dashboard
+  - All Tools
+  - Help
+  - Settings
+- Main content:
+  - Tool cards in grid
+  - Category sections
+  - Smooth hover animations
+3. ANIMATIONS
+- Button hover transitions
+- Page fade/slide transitions
+- Loading spinners during processing
+- Subtle, professional motion only (no flashy effects)
+V1 TOOLS LIST (39 TOOLS
+--- CALCULATORS (9) ---
+1. Basic Calculator
+2. Scientific Calculator
+3. Percentage Calculator
+4. EMI Calculator
+5. GPA Calculator
+6. CGPA Calculator
+7. Age Calculator
+8. Unit Converter
+9. Time Duration Calculator
+(All calculators must work with real JavaScript math logic)
+--- IMAGE TOOLS (7) ---
+10. Image Resizer
+11. Image Cropper
+12. Image Compressor
+13. JPG to PNG
+14. PNG to JPG
+15. Image Grayscale
+16. Image Preview Tool
+(Use Canvas & browser APIs, real processing + download)
+--- PDF TOOLS (8) ---
+17. PDF Merge
+18. PDF Split
+19. PDF Page Reorder
+20. Images to PDF
+21. PDF Viewer
+22. PDF Page Extract
+23. PDF Rotate
+24. PDF Metadata Viewer
+(Use browser-based libraries like pdf-lib where possible)
+--- STUDENT TOOLS (7) ---
+25. Notes Manager
+26. To-Do List
+27. Pomodoro Timer
+28. Study Planner
+29. Homework Tracker
+30. Timetable Generator
+31. Exam Countdown Timer
+(Store data in localStorage, data must persist on refresh)
+--- AI-STYLE TOOLS (8) ---
+32. Essay Generator
+33. Text Summarizer
+34. Paraphraser
+35. Grammar Checker
+36. Notes Generator
+37. Question Generator
+38. Cheat Sheet Generator
+39. Topic Explainer
+(Frontend-only logical text manipulation, rule-based processing,
+clearly label as “Basic AI Engine – V1”)
+WORKFLOW REQUIREMENTS (FOR EVERY TOOL)
+Each tool must follow this flow:
+1. User opens tool
+2. User provides input (text, number, or file)
+3. User clicks action button
+4. Show loading animation (1–3 seconds)
+5. Process input logically (real JS or browser logic)
+6. Show output/result
+7. Allow copy or download where applicable
+No dead buttons. No empty pages.
+SEARCH FUNCTIONALITY
+- Global search bar at top
+- Searches tool name + keywords
+- Results update while typing
+- Clicking result opens the tool
+CODE STRUCTURE
+- Clean folder structure
+- One component per tool
+- Reusable ToolLayout component
+- Reusable Button, Input, Loader components
+- Comment code clearly for readability
+FINAL EXPECTATION
+The result should look and feel like a real, production-ready student tools website.
+Focus on:
+- Stability
+- Clean UX
+- Logical workflows
+- Professional polish
+Proceed step by step and ensure the app runs successfully.

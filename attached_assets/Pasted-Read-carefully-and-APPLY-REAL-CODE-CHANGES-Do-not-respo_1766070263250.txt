@@ -1,0 +1,278 @@
+Read carefully and APPLY REAL CODE CHANGES. Do not respond with explanations.
+
+📌 PROJECT CONTEXT
+
+This is a React + Vite + TypeScript student tools platform named StuDENT.
+
+The app contains:
+
+Landing page
+
+Dashboard
+
+All Tools page
+
+Tool category pages
+
+Individual tool pages
+
+AI tools using Google Gemini API
+
+Current tool count must be 52.
+
+🎯 GLOBAL REQUIREMENTS (MANDATORY)
+✔ Tool Count
+
+Update everywhere:
+
+Landing page hero text
+
+Buttons
+
+Dashboard stats
+
+Footer
+
+Sidebar footer
+
+Metadata
+
+✅ Final text must show: “52 Free Tools”
+
+🎨 UI / UX + ANIMATIONS (VERY IMPORTANT)
+1️⃣ GLOBAL UI UPGRADE
+
+Apply modern UI improvements across:
+
+Landing page
+
+Dashboard
+
+All tools page
+
+Tool detail pages
+
+Add:
+
+Smooth fade-in on page load
+
+Card hover lift + shadow
+
+Button hover micro-interactions
+
+Consistent spacing and typography
+
+Better empty states
+
+Use:
+
+CSS animations or Framer Motion (preferred)
+
+No heavy animations that slow the app
+
+2️⃣ LANDING PAGE ANIMATIONS
+
+Improve landing page with:
+
+Hero text slide + fade animation
+
+CTA buttons with ripple / hover animation
+
+Category cards:
+
+Hover scale
+
+Icon animation
+
+Smooth scroll between sections
+
+3️⃣ TOOLS PAGE + SUB-TOOLS ANIMATIONS
+
+For all tools:
+
+Tool cards animate on load (staggered)
+
+Hover animation on cards
+
+Click animation before routing
+
+For tool pages:
+
+Input fields with focus animation
+
+Buttons with loading animation
+
+Output sections animate when results appear
+
+4️⃣ FILE-BASED TOOL ANIMATIONS
+
+For tools that:
+
+Upload files
+
+Download files
+
+Process media / images / PDFs
+
+Add:
+
+Upload progress bar
+
+File preview animation
+
+Processing spinner with percentage
+
+Success animation on completion
+
+Download button pulse animation
+
+⚠️ These animations must be reusable components.
+
+🧭 ROUTING FIXES (CRITICAL)
+Sidebar behavior:
+
+Dashboard → /dashboard
+
+All Tools → /tools
+
+Fix incorrect routing where both buttons go to the same page.
+
+/tools 404 FIX
+
+Create /tools route if missing
+
+Register it in router
+
+Render full tools list
+
+Ensure direct URL access works
+
+🚫 No 404 allowed
+
+🤖 AI TOOLS – REAL API WORKING
+Gemini Integration Rules:
+
+Use:
+
+process.env.GEMINI_API_KEY
+
+
+Do NOT hardcode API key
+
+Use Gemini 1.5 Flash
+
+All AI tools must return real responses
+
+Add error handling with friendly UI messages
+
+Fix Broken AI Tools:
+
+Question Generator (currently failing)
+
+Any AI tool returning empty output
+
+Ensure:
+
+Valid input validation
+
+Character limits enforced
+
+Clear error messages
+
+Loading animation during AI response
+
+🆕 ADD NEW AI TOOL (TOOL #52)
+Tool Name:
+
+YouTube Video Summarizer
+
+Details:
+
+Category: AI Tools
+
+Route:
+
+/tools/youtube-video-summarizer
+
+
+Input: YouTube URL
+
+Output:
+
+Short summary
+
+Bullet highlights
+
+UI:
+
+URL input
+
+Loading animation
+
+Result reveal animation
+
+Backend:
+
+Extract video ID
+
+Send structured prompt to Gemini
+
+Return JSON response
+
+Add tool to:
+
+AI Tools list
+
+All Tools page
+
+Dashboard counts
+
+Sidebar counts
+
+📊 DASHBOARD IMPROVEMENTS
+
+Dashboard must:
+
+Animate stats counters
+
+Show animated category cards
+
+Show 52 tools
+
+Feel fast and polished
+
+🧪 FINAL VERIFICATION (DO NOT SKIP)
+
+Before finishing:
+
+/ loads with animations
+
+/dashboard works
+
+/tools works
+
+Sidebar routes correctly
+
+Question Generator works
+
+YouTube Summarizer works
+
+Upload/download animations visible
+
+No console errors
+
+🚫 RESPONSE RULE
+
+Do NOT say “done” unless:
+
+UI visibly changes
+
+Animations are implemented
+
+Routes work
+
+AI tools return real data
+
+Tool count is 52 everywhere
+
+Apply real code changes only.

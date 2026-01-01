@@ -1,0 +1,103 @@
+You are working on an existing project called StuDENT – Student Tools Platform loaded from a ZIP file.
+CURRENT STATE:
+Total tools: 52
+Categories: Calculators, Image Tools, PDF Tools, Media Tools, Student Tools, AI Tools
+Some tools are placeholders or partially working
+GOAL (VERY IMPORTANT)
+Convert this project into a clean, honest, V1 release with:
+❌ NO AI TOOLS
+✅ Fewer tools, but 100% working
+✅ Client-side processing only
+✅ Real-world workflows
+STEP 1: REMOVE AI TOOLS COMPLETELY
+Remove the AI Tools category
+Remove all AI tools:
+Essay Generator
+Text Summarizer
+Paraphraser
+Grammar Checker
+Notes Generator
+Question Generator
+Cheat Sheet Generator
+Topic Explainer
+YouTube Video Summarizer
+Also update everywhere:
+Tool counts
+Category tabs
+Dashboard stats
+Landing page text
+Filters
+Routes (no broken pages)
+STEP 2: COMBINE CALCULATORS (REDUCE CLUTTER)
+Merge calculators into one powerful tool:
+“Smart Calculator”
+Includes:
+Basic calculator
+Scientific calculator
+Percentage
+EMI
+GPA / CGPA
+Age calculator
+Unit converter
+Remove individual calculator cards and update counts.
+STEP 3: MAKE MEDIA TOOLS REALLY WORK (CLIENT-SIDE)
+Implement real logic using ffmpeg.wasm.
+Media tools to fully implement:
+Video Compressor
+Video Trimmer
+Video → Audio Extractor
+Audio Compressor
+Audio Trimmer
+Audio Speed Changer
+Rules:
+Upload → Process → Download
+Show progress bar
+Handle large file errors
+No server-side processing
+STEP 4: FIX STUDENT TOOLS (NO PLACEHOLDERS)
+Make Student Tools fully functional using localStorage.
+Implement real workflows:
+Notes Manager → add / edit / delete / save
+To-Do List → tasks + completed state
+Pomodoro Timer → real timer
+Study Planner → date-based planner
+Homework Tracker → subject, deadline, status
+Timetable Generator → editable timetable
+Exam Countdown Timer → real countdown
+No fake text. No “coming soon”.
+STEP 5: PDF / IMAGE TOOLS (CLIENT-SIDE ONLY)
+Make sure these work properly:
+Image Resizer, Cropper, Compressor
+JPG ↔ PNG
+Grayscale
+Image Preview
+PDF tools must:
+Merge
+Split
+Rotate
+Extract pages
+Compress (basic)
+Images → PDF
+Use:
+pdf-lib
+pdfjs
+If a feature is limited, show:
+“Basic mode available in V1. Advanced features coming soon.”
+STEP 6: UI / UX CLEANUP
+Remove duplicate tools
+Disable Process button until file upload
+Add loading spinner
+Add success message
+Keep dark theme consistent
+STEP 7: UPDATE COUNTS & COPY
+Update total tools number everywhere
+Update landing page text:
+“All Student Tools. One Website.”
+“No login. No AI. Just tools that work.”
+FINAL RULES
+Do NOT add ads
+Do NOT add paid APIs
+Do NOT add login
+Keep it fast and simple
+Focus on quality over quantity.
+Deliver a clean, stable StuDENT V1.

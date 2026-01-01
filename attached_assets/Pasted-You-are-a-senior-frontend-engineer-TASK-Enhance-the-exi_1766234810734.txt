@@ -1,0 +1,87 @@
+You are a senior frontend engineer.
+
+TASK:
+Enhance the existing StuDENT website UI with two upgrades only:
+1) A scroll indicator animation on the landing page hero section
+2) A premium theme switcher with named themes (not light/dark)
+
+DO NOT redesign the layout, cards, spacing, or typography.
+Keep everything minimal, fast, and professional.
+
+========================
+1) LANDING PAGE SCROLL ANIMATION
+========================
+Add a subtle scroll indicator at the bottom-center of the hero section.
+
+Design:
+- Mouse-outline style scroll indicator
+- A small dot inside the mouse moves vertically (top → bottom → reset)
+- Smooth infinite animation (1.8s duration, ease-in-out)
+- Opacity ~70%, not distracting
+- Optional small text below: “Scroll”
+
+Behavior:
+- Indicator auto-hides (fade-out) once the user scrolls down even slightly
+- Must not block clicks or affect layout
+- Desktop only (hide on small mobile screens)
+
+Implementation:
+- Use pure CSS animations (no external libraries)
+- Add minimal JS only to detect scroll and hide indicator
+- Keep markup clean and reusable
+
+========================
+2) THEME SWITCHER (TOP RIGHT)
+========================
+Replace the current light/dark toggle with a theme selector.
+
+UI:
+- Icon button in top-right (palette or circle icon)
+- On click, open a small floating dropdown panel
+- Each theme shows:
+  - Color preview dot
+  - Theme name
+  - Active theme checkmark
+
+Themes to implement (start with these 4):
+1) Midnight
+   - Dark background (current theme)
+   - Blue accent
+2) Minimal
+   - White background
+   - Soft gray borders
+   - Dark text
+3) Solar
+   - Light yellow background
+   - Black text
+   - Yellow accent highlights
+4) Slate
+   - Muted gray-blue background
+   - Calm, low-contrast look
+
+Behavior:
+- Theme applies instantly
+- Persist selected theme using localStorage
+- Default theme: Midnight
+- Smooth transition when switching themes (background, text, borders)
+
+Implementation rules:
+- Use CSS variables for colors
+- No inline styles
+- No external UI libraries
+- No performance-heavy animations
+
+========================
+GLOBAL RULES
+========================
+- Do NOT change existing tool cards or routes
+- Do NOT break current functionality
+- Keep animations subtle and premium
+- Follow existing Tailwind / CSS structure
+- Ensure accessibility (contrast, focus states)
+
+OUTPUT EXPECTATION:
+- Add necessary CSS
+- Add minimal JS where required
+- Integrate cleanly into existing codebase
+- No placeholder text, everything production-ready

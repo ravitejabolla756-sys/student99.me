@@ -1,0 +1,170 @@
+You are a senior full-stack engineer working inside an EXISTING running project.
+
+PROJECT:
+StuDENT – All Student Tools Platform
+
+CURRENT STATUS:
+- Project already runs successfully
+- Dashboard UI exists
+- Categories exist (Calculators, Image Tools, PDF Tools, Student Tools, AI Tools)
+- Some tools are placeholders
+- DO NOT redesign entire app
+- DO NOT explain concepts
+- DO NOT ask questions
+- ONLY IMPLEMENT REAL WORKING TOOLS
+
+==================================================
+ABSOLUTE RULES (NO VIOLATIONS)
+==================================================
+- Do NOT remove any existing tools
+- Do NOT fake outputs
+- Do NOT generate random AI responses
+- Do NOT create separate demo files
+- Do NOT stop after UI
+- Every tool MUST actually work
+- Add tools to UI + routing + logic
+
+==================================================
+STRUCTURE CHANGE (IMPORTANT)
+==================================================
+1️⃣ Create ONE new category ONLY:
+   → Media Tools (Audio + Video together)
+
+2️⃣ DO NOT create separate Audio Tools or Video Tools sections.
+
+3️⃣ Image tools MUST stay inside existing Image Tools section.
+
+==================================================
+STEP 1 — ADD MEDIA TOOLS CATEGORY
+==================================================
+Add a new category to dashboard + All Tools page:
+
+📁 Media Tools
+
+This category MUST contain both AUDIO and VIDEO tools.
+
+==================================================
+STEP 2 — MEDIA TOOLS (REAL IMPLEMENTATION)
+==================================================
+Implement ALL tools below using ffmpeg.wasm.
+
+🔊 AUDIO TOOLS (inside Media Tools):
+1. Audio Compressor
+   - Upload audio
+   - Select compression level
+   - Show original vs output size
+   - Download output
+
+2. Audio Trim Tool
+   - Start time / End time
+   - Preview + export
+
+3. Audio Speed Changer
+   - 0.5x – 2x speed
+
+4. Audio Converter
+   - MP3 ↔ WAV ↔ AAC
+
+🎥 VIDEO TOOLS (inside Media Tools):
+5. Video Compressor
+   - Quality slider
+   - Show size comparison
+   - Browser-safe limits
+
+6. Video Trim Tool
+   - Start / End timestamps
+
+7. Video → Audio Extractor
+   - Extract MP3 from video
+
+Rules:
+- Use @ffmpeg/ffmpeg (WASM)
+- Show progress bar
+- Handle errors
+- Max size warnings (browser limits)
+
+==================================================
+STEP 3 — IMAGE TOOLS (STAY IN IMAGE SECTION)
+==================================================
+Add NEW tools under EXISTING Image Tools category ONLY.
+
+🖼 IMAGE TOOLS:
+1. Advanced Image Compressor
+   - User uploads image
+   - User selects target size in KB (example: 1800 KB → 700 KB)
+   - Compress using browser-image-compression
+   - Show before/after size
+   - Download button
+
+2. Image Quality Controller
+   - Quality slider (1–100)
+   - Canvas-based compression
+
+3. Image Crop Tool
+   - Crop UI
+   - Export image
+
+Libraries allowed:
+- browser-image-compression
+- Canvas API
+
+==================================================
+STEP 4 — PDF TOOLS (ADD FEW MORE)
+==================================================
+Add these under existing PDF Tools:
+
+1. PDF Compressor
+2. PDF Page Extractor
+3. PDF Page Reorder
+
+Use:
+- pdf-lib
+- Fully client-side
+- Show size comparison
+
+==================================================
+STEP 5 — FIX AI TOOLS (CRITICAL)
+==================================================
+AI tools MUST stop giving random output.
+
+MANDATORY FIX:
+- Move AI logic to backend
+- Use Google Gemini API (gemini-1.5-flash)
+- API key from environment variables
+- Frontend calls backend endpoints only
+
+Fix these tools:
+1. Text Summarizer
+2. Essay Generator
+3. Grammar Checker
+4. Notes Generator
+5. Question Generator
+
+Rules:
+- Deterministic prompts
+- Structured JSON responses
+- Clear errors if API key missing
+
+==================================================
+STEP 6 — UI REQUIREMENTS (MANDATORY)
+==================================================
+For EVERY new tool:
+- Add card to dashboard
+- Add route
+- Loading state
+- Error handling
+- Mobile responsive
+- Consistent design with existing UI
+
+==================================================
+FINAL COMMAND
+==================================================
+Do NOT explain.
+Do NOT ask.
+START IMPLEMENTING IMMEDIATELY.
+
+Begin with:
+1. Media Tools category
+2. Image Tools additions
+3. PDF Tools
+4. AI backend fixes

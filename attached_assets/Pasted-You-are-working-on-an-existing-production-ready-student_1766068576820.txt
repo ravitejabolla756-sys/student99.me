@@ -1,0 +1,134 @@
+You are working on an existing production-ready student tools platform called “StuDENT”.
+Do NOT redesign the whole app. Do NOT break existing tools.
+Make ONLY the changes listed below, cleanly and professionally.
+
+==============================
+1. LANDING PAGE FIX
+==============================
+• Update the landing page text:
+  - Change “39 free tools” to “52 free tools”
+  - Ensure the count is consistent in:
+    - Hero section
+    - “Why Choose StuDENT?”
+    - Browse by Category section
+    - Footer text (if mentioned)
+
+• Do NOT change layout or UI styles.
+• This is only a content + count correction.
+
+==============================
+2. DASHBOARD / SIDEBAR BUG FIX
+==============================
+Problem:
+Both “Dashboard” and “All Tools” buttons in the left sidebar navigate to the SAME page.
+
+Fix:
+• “Dashboard” → should open the dashboard overview page
+• “All Tools” → should open the full tools listing page
+
+Rules:
+• Fix routing only
+• No UI redesign
+• Ensure active state highlights correctly for each route
+
+==============================
+3. AI TOOLS – API INTEGRATION (IMPORTANT)
+==============================
+Current issue:
+AI tools return random or placeholder output.
+
+Fix:
+• Integrate REAL AI responses using Google Gemini API
+• Use server-side API calls (NOT client-side key exposure)
+
+Environment:
+• Use environment variable:
+  GEMINI_API_KEY
+
+Implementation:
+• Centralize Gemini logic in server (example: server/gemini.ts)
+• All AI tools must use this shared function
+• Handle:
+  - loading state
+  - error state
+  - empty input validation
+
+==============================
+4. ADD NEW AI TOOL (TOTAL TOOLS = 52)
+==============================
+Tool Name:
+• “YouTube Video Summarizer”
+
+Category:
+• AI Tools
+
+Functionality:
+• User pastes a YouTube video URL
+• Backend:
+  - Fetch transcript (use public transcript extraction or captions when available)
+  - Send transcript to Gemini API
+• Output:
+  - Short summary
+  - Bullet-point key highlights
+• Clearly show:
+  - “This tool summarizes publicly available YouTube captions”
+
+Rules:
+• No video download
+• No copyright violation
+• Text-only processing
+
+==============================
+5. MEDIA TOOLS PERFORMANCE FIX
+==============================
+Problem:
+Media tools (video/audio) are very slow.
+
+Fix:
+• Ensure all media tools use:
+  - Client-side processing ONLY
+  - ffmpeg.wasm
+• Add:
+  - Clear progress indicator
+  - File size limits shown clearly
+• Do NOT move processing to server
+
+==============================
+6. CATEGORY STRUCTURE (STRICT)
+==============================
+Categories must remain EXACTLY:
+• Calculators
+• Image Tools
+• Media Tools (audio + video together)
+• PDF Tools
+• Student Tools
+• AI Tools
+
+Rules:
+• Do NOT create new categories
+• Media tools stay combined
+• Image tools stay separate
+
+==============================
+7. TOOL COUNT UPDATE
+==============================
+After changes:
+• Total tools = 52
+• AI Tools count must increase by 1
+• All category counts must be accurate
+
+==============================
+8. CODE QUALITY RULES
+==============================
+• Follow existing project structure
+• Do NOT add unnecessary dependencies
+• No mock data
+• No placeholders
+• No autonomous refactors
+• No breaking changes
+
+After completing:
+• Verify tool counts
+• Verify routing
+• Verify AI outputs are real
+• Verify app runs without errors

@@ -1,0 +1,218 @@
+STEP 1: REMOVE AI TOOLS (CLEANLY)
+
+Completely remove all AI tools and AI categories:
+
+Essay Generator
+
+Text Summarizer
+
+Paraphraser
+
+Grammar Checker
+
+Notes Generator
+
+Question Generator
+
+Cheat Sheet Generator
+
+Topic Explainer
+
+YouTube Video Summarizer
+
+Actions required:
+
+Remove cards
+
+Remove routes
+
+Remove filters/tabs
+
+Update tool counts everywhere:
+
+Landing page
+
+Dashboard
+
+Category filters
+
+Footer text
+
+STEP 2: ADD NEW PDF TOOLS (CLIENT-SIDE, REAL WORKFLOW)
+
+Use pdf-lib + pdfjs only.
+
+Add the following tools under PDF Tools:
+
+PDF Page Size Changer (A4 ↔ Letter)
+
+PDF Orientation Changer (Portrait ↔ Landscape)
+
+PDF Blank Page Inserter
+
+PDF Page Duplicator
+
+PDF Remove Specific Pages (page number input)
+
+PDF Image Extractor
+
+PDF Text Extractor
+
+PDF Password Checker (detect protected PDFs)
+
+PDF File Info Analyzer (pages, size, metadata)
+
+PDF Page Preview Thumbnails Generator
+
+Each PDF tool must have:
+
+File upload
+
+Options panel
+
+Process button
+
+Loading state
+
+Preview (if applicable)
+
+Download button
+
+Reset button
+
+STEP 3: ADD DOC / TEXT DOCUMENT TOOLS (NO SERVER)
+
+Use browser parsing + JS processing.
+
+Add:
+
+DOC Word Counter
+
+DOC Reading Time Estimator
+
+DOC Line Spacing Formatter
+
+DOC Page Break Inserter
+
+DOC Remove Empty Pages
+
+DOC Text Cleaner
+
+DOC Case Formatter (Upper / Lower / Title)
+
+DOC Table Extractor → CSV
+
+STEP 4: ADD IMAGE TOOLS (CANVAS-BASED)
+
+Use <canvas> and File API.
+
+Add:
+
+Image DPI Changer
+
+Image Metadata Viewer (EXIF)
+
+Image Metadata Remover
+
+Image Border Adder
+
+Image Text Overlay Tool
+
+Image Background Blur Tool
+
+Image Color Picker
+
+Image Aspect Ratio Fixer (Instagram, YouTube presets)
+
+STEP 5: ADD VIDEO & AUDIO TOOLS (FREE ONLY)
+
+Use ffmpeg.wasm (lazy-loaded).
+
+Video Tools:
+27. Video Frame Extractor
+28. Video Resolution Changer
+29. Video Metadata Viewer
+30. Video Thumbnail Generator
+
+Audio Tools:
+31. Audio Silence Remover
+32. Audio Fade In / Fade Out
+33. Audio Metadata Editor
+34. Audio Channel Converter (Mono ↔ Stereo)
+
+⚠️ Load ffmpeg only when needed.
+
+STEP 6: ADD TEXT & DEVELOPER UTILITIES (PURE JS)
+
+Character Limit Trimmer
+
+Text Line Sorter (A–Z / Z–A)
+
+Text Randomizer
+
+Whitespace Cleaner
+
+Markdown Previewer
+
+Markdown → HTML Converter
+
+HTML → Text Cleaner
+
+Regex Tester (basic)
+
+STEP 7: ADD FILE & WEB UTILITIES
+
+File Extension Changer
+
+File Name Case Converter
+
+File Duplicate Detector (hash-based)
+
+File MIME Type Checker
+
+Browser Storage Viewer (localStorage)
+
+JSON Formatter & Validator
+
+CSV Data Cleaner
+
+XML Formatter
+
+Base URL Builder
+
+Internet Speed Estimator (basic browser test)
+
+STEP 8: UI / UX REQUIREMENTS
+
+Maintain existing card layout
+
+Correct category labels
+
+Accurate tool counts
+
+No placeholder text
+
+Disable buttons when invalid input
+
+Error handling for unsupported files
+
+Mobile-friendly
+
+STEP 9: FINAL VERIFICATION
+
+All tools actually work
+
+No fake outputs
+
+No console errors
+
+Works on Replit Free
+
+Works on Vercel
+
+Ready for AdSense
+
+🔥 IMPORTANT FINAL NOTE TO REPLIT
+
+Implement changes step-by-step, committing after each category.
+Do NOT stop or ask for upgrades.

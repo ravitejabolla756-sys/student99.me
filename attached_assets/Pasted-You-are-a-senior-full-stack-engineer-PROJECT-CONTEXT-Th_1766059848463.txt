@@ -1,0 +1,153 @@
+You are a senior full-stack engineer.
+
+PROJECT CONTEXT:
+This is an existing production-ready student tools platform called **StuDENT**.
+Tech stack already exists:
+- Frontend: React + TypeScript + Vite + Tailwind
+- Backend: Node.js + Express
+- Structure already implemented (do NOT restructure folders unnecessarily)
+- UI already built and working
+- Categories already present (Calculators, Image Tools, PDF Tools, Student Tools, AI Tools)
+
+GOAL:
+Upgrade the platform from demo-level tools to **professionally working real tools**.
+Do NOT break existing tools or UI.
+Enhance functionality, accuracy, and performance.
+
+==============================
+STRICT RULES
+==============================
+- Do NOT delete existing tools
+- Do NOT change routing structure
+- Do NOT add paid APIs unless explicitly instructed
+- Do NOT expose API keys in frontend
+- Keep all tools FREE
+- Keep limits clearly defined in UI
+- Prefer client-side processing wherever possible
+- Add loading states, progress indicators, and error handling
+
+==============================
+PHASE 1 — IMAGE TOOLS (CLIENT-SIDE)
+==============================
+Implement real image processing using browser-based libraries.
+
+Use:
+- browser-image-compression
+- canvas APIs
+
+Tools to implement:
+1. Image Compressor
+   - User uploads image
+   - User selects target output size (KB slider)
+   - Compress image to nearest possible size
+   - Show original vs compressed size
+   - Allow download
+
+2. Image Resize
+   - Width/Height input
+   - Maintain aspect ratio option
+
+3. Image Format Converter
+   - JPG ↔ PNG ↔ WEBP
+
+4. Image Quality Reducer
+   - Quality slider (1–100)
+
+All processing must happen in browser (NO server usage).
+
+==============================
+PHASE 2 — AUDIO TOOLS (FFMPEG.WASM)
+==============================
+Use @ffmpeg/ffmpeg (WASM).
+
+Tools:
+1. Audio Compressor (MP3/WAV)
+2. Audio Trim
+3. Audio Converter (WAV → MP3)
+4. Audio Speed Control
+
+Rules:
+- Max file size: 50 MB
+- Show progress bar
+- Handle unsupported formats gracefully
+
+==============================
+PHASE 3 — VIDEO TOOLS (LIMITED BUT REAL)
+==============================
+Use ffmpeg.wasm for SMALL/MEDIUM videos only.
+
+Tools:
+1. Video Trim
+2. Video Compress (lower bitrate + resolution)
+3. Video → Audio (MP3)
+
+Rules:
+- Max file size: 100 MB
+- Clear warning about browser limitations
+- Show progress and estimated time
+
+==============================
+PHASE 4 — PDF TOOLS (CLIENT-SIDE FIRST)
+==============================
+Use pdf-lib.
+
+Tools:
+1. PDF Merge
+2. PDF Split
+3. PDF Compress
+4. PDF Rotate
+5. Images → PDF
+
+Rules:
+- No OCR
+- No server processing
+- Show file size before/after
+
+==============================
+PHASE 5 — AI TOOLS (REAL OUTPUT, NOT DUMMY)
+==============================
+Fix AI tools so they stop returning random or fake outputs.
+
+Backend-only AI integration.
+
+Use:
+- Google Gemini API (gemini-1.5-flash)
+- Free tier only
+
+Implement backend routes for:
+1. Text Summarizer
+2. Essay Generator
+3. Grammar Checker
+4. Notes Generator
+5. Question Generator
+
+Rules:
+- API key stored in backend env only
+- Frontend calls backend endpoints
+- Add character limits
+- Add loading + error states
+- Clean, structured responses (not raw dumps)
+
+==============================
+UX & QUALITY REQUIREMENTS
+==============================
+- Each tool page must show:
+  - Tool description
+  - File limits
+  - Clear CTA
+- Add drag & drop for file tools
+- Add skeleton loaders
+- Add success + error messages
+- Ensure mobile responsiveness
+
+==============================
+DELIVERABLE
+==============================
+- Fully working tools (not placeholders)
+- Clean code
+- No breaking changes
+- Professional behavior similar to top tools websites
+- All tools remain free
+
+Proceed step-by-step.
+Start with IMAGE TOOLS first.

@@ -1,0 +1,80 @@
+You are a senior creative frontend engineer.
+
+GOAL:
+Upgrade the landing page of the StuDENT website with a FULL-PAGE, SCROLL-REACTIVE BACKGROUND ANIMATION.
+This animation must react smoothly as the user scrolls.
+
+IMPORTANT:
+This is NOT a small scroll icon.
+This is NOT a loader.
+This is a subtle, immersive background motion across the entire hero section.
+
+Do NOT redesign layout, text, buttons, or cards.
+
+========================
+BACKGROUND SCROLL ANIMATION (HERO SECTION)
+========================
+Apply a dynamic background animation to the full landing page hero section.
+
+Animation concept:
+- Background elements move slowly based on scroll position
+- Creates a “depth / parallax / wonder” effect
+- Feels premium, calm, and modern
+- No distraction to text readability
+
+Visual style (choose ONE clean approach):
+Option A: Floating gradient blobs
+- Soft blurred shapes
+- Move vertically at different speeds while scrolling
+- Very low opacity (10–20%)
+
+Option B: Grid / noise motion
+- Subtle noise or dot grid
+- Position shifts slightly with scroll
+- Gives a tech / futuristic student vibe
+
+Option C: Light wave motion
+- Soft abstract waves
+- Slowly translate upward as user scrolls down
+- No sharp lines or bright colors
+
+========================
+SCROLL BEHAVIOR
+========================
+- Background reacts continuously to scrollY value
+- Use requestAnimationFrame for smoothness
+- Movement must be slow (parallax ratio 0.1–0.3)
+- Animation stops once hero section is passed
+
+========================
+TECHNICAL RULES
+========================
+- Use pure CSS + minimal JS
+- Use CSS variables for transform values
+- No external animation libraries (no GSAP, no Lottie)
+- Must not affect performance or FPS
+- Must work smoothly on desktop
+- Disable or reduce motion on mobile automatically
+
+========================
+ACCESSIBILITY
+========================
+- Respect prefers-reduced-motion
+- If reduced motion is enabled, keep background static
+- Ensure text contrast stays readable at all times
+
+========================
+INTEGRATION RULES
+========================
+- Apply only to landing page hero section
+- Do NOT affect dashboard or tools pages
+- No DOM restructuring
+- No breaking changes
+
+========================
+OUTPUT EXPECTATION
+========================
+- Add background layers (divs or pseudo-elements)
+- Add scroll listener logic
+- Smooth transitions
+- Clean, production-ready code

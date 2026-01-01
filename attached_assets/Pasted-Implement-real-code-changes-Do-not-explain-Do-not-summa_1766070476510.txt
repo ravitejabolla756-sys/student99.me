@@ -1,0 +1,183 @@
+Implement real code changes. Do not explain. Do not summarize.
+
+📌 GOAL
+
+Make StuDENT fully Google AdSense-ready while keeping:
+
+Clean UI
+
+Good UX
+
+Fast performance
+
+Policy-safe placement (no violations)
+
+🧱 ADSENSE LAYOUT STRUCTURE (MANDATORY)
+1️⃣ GLOBAL AD LAYOUT RULES
+
+Ads must NOT block content
+
+Ads must NOT appear:
+
+Inside form inputs
+
+Between question & answer text
+
+Inside AI responses
+
+Ads must load lazily
+
+Ads must be responsive
+
+Create a reusable Ad component.
+
+🧩 AD COMPONENT SYSTEM
+
+Create:
+
+client/src/components/ads/AdSlot.tsx
+
+
+Props:
+
+type: "banner" | "sidebar" | "incontent" | "footer"
+
+Responsive behavior
+
+Placeholder when ads not enabled
+
+Include:
+
+data-ad-client
+
+data-ad-slot
+
+data-ad-format="auto"
+
+⚠️ Use placeholders if AdSense not approved yet.
+
+📍 WHERE TO PLACE ADS (IMPORTANT)
+2️⃣ LANDING PAGE ADS
+
+Add:
+
+1 banner ad below hero section
+
+1 in-content ad between sections
+
+NO ads above hero headline
+
+Animations:
+
+Fade-in when scrolled into view
+
+3️⃣ DASHBOARD ADS
+
+Add:
+
+1 horizontal banner below dashboard stats
+
+1 in-content ad after first category
+
+Ensure:
+
+Does not interrupt tool cards
+
+Smooth spacing
+
+4️⃣ ALL TOOLS PAGE ADS (/tools)
+
+Add:
+
+1 banner ad after search bar
+
+1 in-content ad after every 8 tools
+
+Ensure:
+
+Grid alignment not broken
+
+Ads visually separated
+
+5️⃣ TOOL DETAIL PAGE ADS
+
+For each tool page:
+
+1 ad below tool description
+
+1 ad after output section
+
+Rules:
+
+Never place ads near action buttons
+
+Never place ads between input & output
+
+6️⃣ AI TOOLS ADS (STRICT)
+
+AI tools must:
+
+Show ad only after result appears
+
+Never show ad during loading
+
+Never mix ad with AI response text
+
+🎨 UI / UX FOR ADS
+
+Light background container
+
+Label text: “Sponsored”
+
+Rounded corners
+
+Smooth fade-in animation
+
+Mobile-friendly spacing
+
+⚙️ PERFORMANCE RULES
+
+Load ads with requestIdleCallback or useEffect
+
+No blocking scripts
+
+Use lazy rendering
+
+🛡️ ADSENSE POLICY SAFETY
+
+Ensure:
+
+Privacy Policy page exists
+
+Terms page exists
+
+Footer links visible
+
+No misleading placement
+
+No accidental clicks
+
+🧪 FINAL CHECKLIST (DO NOT SKIP)
+
+Ads visible on:
+
+Landing page
+
+Dashboard
+
+Tools page
+
+Tool pages
+
+Mobile layout clean
+
+No CLS issues
+
+No console errors
+
+App works even if ads fail to load
+
+🚫 RESPONSE RULE
+
+Do NOT respond with explanations.
+Apply real UI + layout code changes only.
