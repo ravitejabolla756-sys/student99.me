@@ -5,15 +5,18 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { 
-  ArrowLeft, 
+import {
+  ArrowLeft,
   Search,
   Calculator,
   Image,
   FileText,
   GraduationCap,
   Sparkles,
-  Video
+  Video,
+  Type,
+  Wallet,
+  Wand2
 } from "lucide-react";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { tools, categoryInfo, ToolCategory, getToolsByCategory } from "@/lib/tools-data";
@@ -24,7 +27,10 @@ const categoryIcons: Record<ToolCategory, any> = {
   image: Image,
   pdf: FileText,
   student: GraduationCap,
-  media: Video
+  media: Video,
+  text: Type,
+  finance: Wallet,
+  utility: Wand2
 };
 
 const containerVariants = {
@@ -39,8 +45,8 @@ const containerVariants = {
 
 const itemVariants = {
   hidden: { opacity: 0, y: 20 },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     y: 0,
     transition: { duration: 0.3 }
   }
@@ -50,16 +56,16 @@ export default function AllTools() {
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<ToolCategory | "all">("all");
 
-  const categories: ToolCategory[] = ["calculators", "image", "pdf", "media", "student"];
+  const categories: ToolCategory[] = ["calculators", "image", "pdf", "media", "student", "text", "finance", "utility"];
 
   const filteredTools = tools.filter(tool => {
-    const matchesSearch = !search || 
+    const matchesSearch = !search ||
       tool.name.toLowerCase().includes(search.toLowerCase()) ||
       tool.description.toLowerCase().includes(search.toLowerCase()) ||
       tool.keywords.some(k => k.toLowerCase().includes(search.toLowerCase()));
-    
+
     const matchesCategory = selectedCategory === "all" || tool.category === selectedCategory;
-    
+
     return matchesSearch && matchesCategory;
   });
 
@@ -75,11 +81,11 @@ export default function AllTools() {
             </Link>
             <Link href="/">
               <h1 className="text-xl font-bold font-display">
-                stu<span className="text-primary">DEN</span>t
+                stu<span className="text-primary">DEN</span>t99
               </h1>
             </Link>
           </div>
-          
+
           <div className="flex items-center gap-2">
             <ThemeSwitcher />
           </div>
@@ -93,11 +99,11 @@ export default function AllTools() {
           transition={{ duration: 0.5 }}
           className="text-center mb-8"
         >
-          <h2 className="text-3xl sm:text-4xl font-bold mb-2">All 60 Tools</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold mb-2">All 99 Tools</h2>
           <p className="text-muted-foreground">Browse our complete collection of free student tools</p>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
@@ -155,11 +161,11 @@ export default function AllTools() {
             const Icon = tool.icon;
             const catInfo = categoryInfo[tool.category];
             const CatIcon = categoryIcons[tool.category];
-            
+
             return (
               <motion.div key={tool.id} variants={itemVariants}>
                 <Link href={tool.path}>
-                  <Card 
+                  <Card
                     className="group cursor-pointer h-full transition-all duration-300 hover:shadow-lg hover:scale-[1.02] hover:-translate-y-1"
                     data-testid={`card-tool-${tool.id}`}
                   >
@@ -192,14 +198,14 @@ export default function AllTools() {
         </motion.div>
 
         {filteredTools.length === 0 && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             className="text-center py-12"
           >
             <p className="text-muted-foreground text-lg">No tools found matching your search.</p>
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               className="mt-4"
               onClick={() => { setSearch(""); setSelectedCategory("all"); }}
             >

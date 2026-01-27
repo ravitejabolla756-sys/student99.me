@@ -950,3 +950,886 @@ export function ExamCountdownTimer() {
     </ToolLayout>
   );
 }
+
+interface Flashcard {
+  id: string;
+  front: string;
+  back: string;
+}
+
+export function FlashcardMaker() {
+  const tool = getToolById("flashcard-maker")!;
+  const [cards, setCards] = useLocalStorage<Flashcard[]>("student-flashcards", []);
+  const [front, setFront] = useState("");
+  const [back, setBack] = useState("");
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [showBack, setShowBack] = useState(false);
+  const [isStudying, setIsStudying] = useState(false);
+
+  const addCard = () => {
+    if (!front.trim() || !back.trim()) return;
+    const card: Flashcard = {
+      id: Date.now().toString(),
+      front: front.trim(),
+      back: back.trim(),
+    };
+    setCards(prev => [...prev, card]);
+    setFront("");
+    setBack("");
+  };
+
+  const deleteCard = (id: string) => {
+    setCards(prev => prev.filter(c => c.id !== id));
+  };
+
+  const nextCard = () => {
+    setShowBack(false);
+    setCurrentIndex(prev => (prev + 1) % cards.length);
+  };
+
+  const prevCard = () => {
+    setShowBack(false);
+    setCurrentIndex(prev => (prev - 1 + cards.length) % cards.length);
+  };
+
+  const shuffleCards = () => {
+    const shuffled = [...cards].sort(() => Math.random() - 0.5);
+    setCards(shuffled);
+    setCurrentIndex(0);
+    setShowBack(false);
+  };
+
+  return (
+    <ToolLayout tool={tool}>
+      <div className="space-y-6">
+        {!isStudying ? (
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label>Front (Question)</Label>
+                <Textarea
+                  value={front}
+                  onChange={(e) => setFront(e.target.value)}
+                  placeholder="Enter the question or term..."
+                  className="min-h-[100px]"
+                  data-testid="textarea-front"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>Back (Answer)</Label>
+                <Textarea
+                  value={back}
+                  onChange={(e) => setBack(e.target.value)}
+                  placeholder="Enter the answer or definition..."
+                  className="min-h-[100px]"
+                  data-testid="textarea-back"
+                />
+              </div>
+            </div>
+
+            <div className="flex gap-2">
+              <Button onClick={addCard} data-testid="button-add">
+                <Plus className="w-4 h-4 mr-2" /> Add Card
+              </Button>
+              {cards.length > 0 && (
+                <Button variant="outline" onClick={() => setIsStudying(true)} data-testid="button-study">
+                  Study ({cards.length} cards)
+                </Button>
+              )}
+            </div>
+
+            <div className="space-y-2">
+              {cards.map((card, i) => (
+                <div key={card.id} className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg">
+                  <span className="text-sm text-muted-foreground w-8">#{i + 1}</span>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium truncate">{card.front}</p>
+                    <p className="text-sm text-muted-foreground truncate">{card.back}</p>
+                  </div>
+                  <Button variant="ghost" size="icon" onClick={() => deleteCard(card.id)}>
+                    <Trash2 className="w-4 h-4" />
+                  </Button>
+                </div>
+              ))}
+            </div>
+          </>
+        ) : (
+          <div className="max-w-lg mx-auto space-y-6">
+            <div className="flex items-center justify-between">
+              <Button variant="outline" onClick={() => setIsStudying(false)}>
+                <X className="w-4 h-4 mr-2" /> Exit Study
+              </Button>
+              <span className="text-sm text-muted-foreground">
+                Card {currentIndex + 1} of {cards.length}
+              </span>
+              <Button variant="outline" onClick={shuffleCards}>
+                Shuffle
+              </Button>
+            </div>
+
+            <div
+              className="min-h-[300px] bg-muted/50 rounded-xl p-8 flex items-center justify-center cursor-pointer"
+              onClick={() => setShowBack(!showBack)}
+              data-testid="card-display"
+            >
+              <div className="text-center">
+                <p className="text-xs text-muted-foreground mb-4">
+                  {showBack ? "Answer" : "Question"} (Click to flip)
+                </p>
+                <p className="text-2xl font-medium">
+                  {showBack ? cards[currentIndex]?.back : cards[currentIndex]?.front}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex justify-center gap-4">
+              <Button variant="outline" onClick={prevCard} data-testid="button-prev">
+                Previous
+              </Button>
+              <Button onClick={nextCard} data-testid="button-next">
+                Next
+              </Button>
+            </div>
+          </div>
+        )}
+      </div>
+    </ToolLayout>
+  );
+}
+
+export function AttendanceCalculator() {
+  const tool = getToolById("attendance-calculator")!;
+  const [totalClasses, setTotalClasses] = useState("");
+  const [attendedClasses, setAttendedClasses] = useState("");
+  const [targetPercentage, setTargetPercentage] = useState("75");
+
+  const total = parseInt(totalClasses) || 0;
+  const attended = parseInt(attendedClasses) || 0;
+  const target = parseInt(targetPercentage) || 75;
+
+  const currentPercentage = total > 0 ? (attended / total) * 100 : 0;
+  
+  // Calculate classes needed for target
+  const classesNeededForTarget = Math.ceil((target * total - 100 * attended) / (100 - target));
+  const canSkipClasses = total > 0 ? Math.floor((100 * attended - target * total) / target) : 0;
+
+  return (
+    <ToolLayout tool={tool}>
+      <div className="max-w-md mx-auto space-y-6">
+        <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <Label>Total Classes</Label>
+            <Input
+              type="number"
+              value={totalClasses}
+              onChange={(e) => setTotalClasses(e.target.value)}
+              placeholder="e.g., 50"
+              data-testid="input-total"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label>Classes Attended</Label>
+            <Input
+              type="number"
+              value={attendedClasses}
+              onChange={(e) => setAttendedClasses(e.target.value)}
+              placeholder="e.g., 40"
+              data-testid="input-attended"
+            />
+          </div>
+        </div>
+
+        <div className="space-y-2">
+          <Label>Target Attendance (%)</Label>
+          <Input
+            type="number"
+            value={targetPercentage}
+            onChange={(e) => setTargetPercentage(e.target.value)}
+            placeholder="e.g., 75"
+            data-testid="input-target"
+          />
+        </div>
+
+        {total > 0 && (
+          <ResultDisplay title="Attendance Status">
+            <div className="space-y-4">
+              <div className="text-center">
+                <p className={`text-5xl font-bold ${currentPercentage >= target ? "text-green-500" : "text-red-500"}`}>
+                  {currentPercentage.toFixed(1)}%
+                </p>
+                <p className="text-muted-foreground">Current Attendance</p>
+              </div>
+
+              <div className="space-y-2 text-sm">
+                {currentPercentage < target ? (
+                  <p className="text-center text-red-500">
+                    You need to attend <strong>{Math.max(0, classesNeededForTarget)}</strong> more consecutive classes to reach {target}%
+                  </p>
+                ) : (
+                  <p className="text-center text-green-500">
+                    You can skip up to <strong>{canSkipClasses}</strong> classes and still maintain {target}%
+                  </p>
+                )}
+              </div>
+
+              <div className="h-3 bg-muted rounded-full overflow-hidden">
+                <div
+                  className={`h-full transition-all ${currentPercentage >= target ? "bg-green-500" : "bg-red-500"}`}
+                  style={{ width: `${Math.min(100, currentPercentage)}%` }}
+                />
+              </div>
+            </div>
+          </ResultDisplay>
+        )}
+      </div>
+    </ToolLayout>
+  );
+}
+
+export function MarksPredictor() {
+  const tool = getToolById("marks-predictor")!;
+  const [components, setComponents] = useState([
+    { name: "Quiz 1", marks: "", maxMarks: "20", weightage: "10" },
+    { name: "Assignment", marks: "", maxMarks: "30", weightage: "15" },
+    { name: "Mid-term", marks: "", maxMarks: "100", weightage: "30" },
+  ]);
+
+  const addComponent = () => {
+    setComponents(prev => [...prev, { name: "", marks: "", maxMarks: "", weightage: "" }]);
+  };
+
+  const removeComponent = (index: number) => {
+    setComponents(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const updateComponent = (index: number, field: string, value: string) => {
+    setComponents(prev => prev.map((c, i) => i === index ? { ...c, [field]: value } : c));
+  };
+
+  const calculateTotal = () => {
+    let totalWeightedScore = 0;
+    let totalWeightage = 0;
+
+    components.forEach(c => {
+      const marks = parseFloat(c.marks);
+      const maxMarks = parseFloat(c.maxMarks);
+      const weightage = parseFloat(c.weightage);
+
+      if (!isNaN(marks) && !isNaN(maxMarks) && !isNaN(weightage) && maxMarks > 0) {
+        totalWeightedScore += (marks / maxMarks) * weightage;
+        totalWeightage += weightage;
+      }
+    });
+
+    return { score: totalWeightedScore, totalWeightage };
+  };
+
+  const { score, totalWeightage } = calculateTotal();
+
+  return (
+    <ToolLayout tool={tool}>
+      <div className="space-y-6">
+        <div className="space-y-4">
+          {components.map((comp, index) => (
+            <div key={index} className="grid grid-cols-12 gap-2 items-end">
+              <div className="col-span-3">
+                <Label className="text-xs">Component</Label>
+                <Input
+                  value={comp.name}
+                  onChange={(e) => updateComponent(index, "name", e.target.value)}
+                  placeholder="Name"
+                />
+              </div>
+              <div className="col-span-2">
+                <Label className="text-xs">Marks</Label>
+                <Input
+                  type="number"
+                  value={comp.marks}
+                  onChange={(e) => updateComponent(index, "marks", e.target.value)}
+                  placeholder="Scored"
+                />
+              </div>
+              <div className="col-span-2">
+                <Label className="text-xs">Max</Label>
+                <Input
+                  type="number"
+                  value={comp.maxMarks}
+                  onChange={(e) => updateComponent(index, "maxMarks", e.target.value)}
+                  placeholder="Max"
+                />
+              </div>
+              <div className="col-span-3">
+                <Label className="text-xs">Weightage (%)</Label>
+                <Input
+                  type="number"
+                  value={comp.weightage}
+                  onChange={(e) => updateComponent(index, "weightage", e.target.value)}
+                  placeholder="%"
+                />
+              </div>
+              <div className="col-span-2">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => removeComponent(index)}
+                  disabled={components.length === 1}
+                >
+                  <Trash2 className="w-4 h-4" />
+                </Button>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <Button variant="outline" onClick={addComponent}>
+          <Plus className="w-4 h-4 mr-2" /> Add Component
+        </Button>
+
+        <ResultDisplay title="Predicted Internal Marks">
+          <div className="text-center space-y-2">
+            <p className="text-5xl font-bold text-primary">{score.toFixed(1)}%</p>
+            <p className="text-muted-foreground">
+              Based on {totalWeightage}% of total weightage evaluated
+            </p>
+            {totalWeightage < 100 && (
+              <p className="text-sm text-yellow-500">
+                {(100 - totalWeightage).toFixed(0)}% weightage remaining (e.g., final exam)
+              </p>
+            )}
+          </div>
+        </ResultDisplay>
+      </div>
+    </ToolLayout>
+  );
+}
+
+interface StudyLog {
+  id: string;
+  date: string;
+  subject: string;
+  hours: number;
+}
+
+export function StudyHoursTracker() {
+  const tool = getToolById("study-hours-tracker")!;
+  const [logs, setLogs] = useLocalStorage<StudyLog[]>("student-study-logs", []);
+  const [subject, setSubject] = useState("");
+  const [hours, setHours] = useState("");
+  const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
+
+  const addLog = () => {
+    if (!subject.trim() || !hours) return;
+    const log: StudyLog = {
+      id: Date.now().toString(),
+      date,
+      subject: subject.trim(),
+      hours: parseFloat(hours),
+    };
+    setLogs(prev => [log, ...prev]);
+    setSubject("");
+    setHours("");
+  };
+
+  const deleteLog = (id: string) => {
+    setLogs(prev => prev.filter(l => l.id !== id));
+  };
+
+  const totalHours = logs.reduce((sum, l) => sum + l.hours, 0);
+  const todayHours = logs.filter(l => l.date === new Date().toISOString().split("T")[0]).reduce((sum, l) => sum + l.hours, 0);
+  const weekHours = logs.filter(l => {
+    const logDate = new Date(l.date);
+    const weekAgo = new Date();
+    weekAgo.setDate(weekAgo.getDate() - 7);
+    return logDate >= weekAgo;
+  }).reduce((sum, l) => sum + l.hours, 0);
+
+  return (
+    <ToolLayout tool={tool}>
+      <div className="space-y-6">
+        <div className="grid grid-cols-3 gap-4">
+          <div className="p-4 bg-primary/10 rounded-lg text-center">
+            <p className="text-2xl font-bold text-primary">{todayHours.toFixed(1)}</p>
+            <p className="text-xs text-muted-foreground">Hours Today</p>
+          </div>
+          <div className="p-4 bg-muted/50 rounded-lg text-center">
+            <p className="text-2xl font-bold">{weekHours.toFixed(1)}</p>
+            <p className="text-xs text-muted-foreground">This Week</p>
+          </div>
+          <div className="p-4 bg-muted/50 rounded-lg text-center">
+            <p className="text-2xl font-bold">{totalHours.toFixed(1)}</p>
+            <p className="text-xs text-muted-foreground">All Time</p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="space-y-2">
+            <Label>Subject</Label>
+            <Input
+              value={subject}
+              onChange={(e) => setSubject(e.target.value)}
+              placeholder="e.g., Math"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label>Hours</Label>
+            <Input
+              type="number"
+              step="0.5"
+              value={hours}
+              onChange={(e) => setHours(e.target.value)}
+              placeholder="e.g., 2"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label>Date</Label>
+            <Input
+              type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label>&nbsp;</Label>
+            <Button onClick={addLog} className="w-full">
+              <Plus className="w-4 h-4 mr-2" /> Log
+            </Button>
+          </div>
+        </div>
+
+        <div className="space-y-2 max-h-96 overflow-auto">
+          {logs.map(log => (
+            <div key={log.id} className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+              <div>
+                <p className="font-medium">{log.subject}</p>
+                <p className="text-xs text-muted-foreground">{new Date(log.date).toLocaleDateString()}</p>
+              </div>
+              <div className="flex items-center gap-3">
+                <span className="font-semibold">{log.hours}h</span>
+                <Button variant="ghost" size="icon" onClick={() => deleteLog(log.id)}>
+                  <Trash2 className="w-4 h-4" />
+                </Button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </ToolLayout>
+  );
+}
+
+export function QuizGenerator() {
+  const tool = getToolById("quiz-generator")!;
+  const [text, setText] = useState("");
+  const [questions, setQuestions] = useState<{ question: string; answer: string }[]>([]);
+
+  const generate = () => {
+    const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 20);
+    const generated: { question: string; answer: string }[] = [];
+
+    sentences.slice(0, 10).forEach(sentence => {
+      const words = sentence.trim().split(/\s+/);
+      if (words.length < 5) return;
+
+      // Generate fill-in-the-blank question
+      const importantWordIndex = Math.floor(words.length / 2);
+      const answer = words[importantWordIndex];
+      const questionWords = [...words];
+      questionWords[importantWordIndex] = "_____";
+      generated.push({
+        question: `Fill in the blank: ${questionWords.join(" ")}`,
+        answer,
+      });
+    });
+
+    setQuestions(generated);
+  };
+
+  return (
+    <ToolLayout tool={tool}>
+      <div className="space-y-6">
+        <div className="space-y-2">
+          <Label>Enter text to generate questions from</Label>
+          <Textarea
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            placeholder="Paste your study notes or text here..."
+            className="min-h-[150px]"
+          />
+        </div>
+
+        <Button onClick={generate} className="w-full">
+          Generate Quiz Questions
+        </Button>
+
+        {questions.length > 0 && (
+          <ResultDisplay title={`Generated ${questions.length} Questions`}>
+            <div className="space-y-4">
+              {questions.map((q, i) => (
+                <div key={i} className="p-4 bg-background rounded-lg space-y-2">
+                  <p className="font-medium">Q{i + 1}: {q.question}</p>
+                  <details className="text-sm">
+                    <summary className="cursor-pointer text-primary">Show Answer</summary>
+                    <p className="mt-2 p-2 bg-muted rounded">{q.answer}</p>
+                  </details>
+                </div>
+              ))}
+            </div>
+          </ResultDisplay>
+        )}
+      </div>
+    </ToolLayout>
+  );
+}
+
+export function BibliographyGenerator() {
+  const tool = getToolById("bibliography-generator")!;
+  const [type, setType] = useState("book");
+  const [authors, setAuthors] = useState("");
+  const [title, setTitle] = useState("");
+  const [year, setYear] = useState("");
+  const [publisher, setPublisher] = useState("");
+  const [url, setUrl] = useState("");
+  const [journal, setJournal] = useState("");
+  const [volume, setVolume] = useState("");
+  const [pages, setPages] = useState("");
+  const [format, setFormat] = useState("apa");
+  const [citation, setCitation] = useState("");
+
+  const generate = () => {
+    const authorList = authors.split(",").map(a => a.trim());
+    let result = "";
+
+    if (format === "apa") {
+      if (type === "book") {
+        result = `${authorList.join(", ")} (${year}). *${title}*. ${publisher}.`;
+      } else if (type === "journal") {
+        result = `${authorList.join(", ")} (${year}). ${title}. *${journal}*, ${volume}, ${pages}.`;
+      } else {
+        result = `${authorList.join(", ")} (${year}). ${title}. Retrieved from ${url}`;
+      }
+    } else if (format === "mla") {
+      if (type === "book") {
+        result = `${authorList.join(", ")}. *${title}*. ${publisher}, ${year}.`;
+      } else if (type === "journal") {
+        result = `${authorList.join(", ")}. "${title}." *${journal}*, vol. ${volume}, ${year}, pp. ${pages}.`;
+      } else {
+        result = `${authorList.join(", ")}. "${title}." *Web*. ${year}. <${url}>.`;
+      }
+    } else {
+      // Chicago
+      if (type === "book") {
+        result = `${authorList.join(", ")}. *${title}*. ${publisher}, ${year}.`;
+      } else if (type === "journal") {
+        result = `${authorList.join(", ")}. "${title}." *${journal}* ${volume} (${year}): ${pages}.`;
+      } else {
+        result = `${authorList.join(", ")}. "${title}." Accessed ${year}. ${url}.`;
+      }
+    }
+
+    setCitation(result);
+  };
+
+  return (
+    <ToolLayout tool={tool}>
+      <div className="space-y-6">
+        <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <Label>Source Type</Label>
+            <Select value={type} onValueChange={setType}>
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="book">Book</SelectItem>
+                <SelectItem value="journal">Journal Article</SelectItem>
+                <SelectItem value="website">Website</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="space-y-2">
+            <Label>Citation Format</Label>
+            <Select value={format} onValueChange={setFormat}>
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="apa">APA 7th</SelectItem>
+                <SelectItem value="mla">MLA 9th</SelectItem>
+                <SelectItem value="chicago">Chicago</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <Label>Author(s) (comma separated)</Label>
+            <Input
+              value={authors}
+              onChange={(e) => setAuthors(e.target.value)}
+              placeholder="e.g., Smith, J., Jones, M."
+            />
+          </div>
+          <div className="space-y-2">
+            <Label>Year</Label>
+            <Input
+              value={year}
+              onChange={(e) => setYear(e.target.value)}
+              placeholder="e.g., 2023"
+            />
+          </div>
+        </div>
+
+        <div className="space-y-2">
+          <Label>Title</Label>
+          <Input
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Enter the title"
+          />
+        </div>
+
+        {type === "book" && (
+          <div className="space-y-2">
+            <Label>Publisher</Label>
+            <Input
+              value={publisher}
+              onChange={(e) => setPublisher(e.target.value)}
+              placeholder="e.g., Oxford University Press"
+            />
+          </div>
+        )}
+
+        {type === "journal" && (
+          <div className="grid grid-cols-3 gap-4">
+            <div className="space-y-2">
+              <Label>Journal</Label>
+              <Input value={journal} onChange={(e) => setJournal(e.target.value)} placeholder="Journal name" />
+            </div>
+            <div className="space-y-2">
+              <Label>Volume</Label>
+              <Input value={volume} onChange={(e) => setVolume(e.target.value)} placeholder="e.g., 12" />
+            </div>
+            <div className="space-y-2">
+              <Label>Pages</Label>
+              <Input value={pages} onChange={(e) => setPages(e.target.value)} placeholder="e.g., 45-67" />
+            </div>
+          </div>
+        )}
+
+        {type === "website" && (
+          <div className="space-y-2">
+            <Label>URL</Label>
+            <Input
+              value={url}
+              onChange={(e) => setUrl(e.target.value)}
+              placeholder="https://example.com"
+            />
+          </div>
+        )}
+
+        <Button onClick={generate} className="w-full">
+          Generate Citation
+        </Button>
+
+        {citation && (
+          <ResultDisplay title={`${format.toUpperCase()} Citation`}>
+            <div className="p-4 bg-background rounded-lg" dangerouslySetInnerHTML={{ __html: citation.replace(/\*([^*]+)\*/g, "<em>$1</em>") }} />
+          </ResultDisplay>
+        )}
+      </div>
+    </ToolLayout>
+  );
+}
+
+export function ReadingTimeCalculator() {
+  const tool = getToolById("reading-time-calculator")!;
+  const [text, setText] = useState("");
+  const [speed, setSpeed] = useState("200");
+
+  const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+  const wpm = parseInt(speed) || 200;
+  const minutes = Math.ceil(words / wpm);
+  const pages = (words / 250).toFixed(1);
+
+  return (
+    <ToolLayout tool={tool}>
+      <div className="max-w-lg mx-auto space-y-6">
+        <div className="space-y-2">
+          <Label>Paste your text</Label>
+          <Textarea
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            placeholder="Paste the text you want to read..."
+            className="min-h-[200px]"
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label>Reading Speed (words per minute)</Label>
+          <Select value={speed} onValueChange={setSpeed}>
+            <SelectTrigger>
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="150">Slow (150 wpm)</SelectItem>
+              <SelectItem value="200">Average (200 wpm)</SelectItem>
+              <SelectItem value="250">Fast (250 wpm)</SelectItem>
+              <SelectItem value="300">Speed Reader (300 wpm)</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        {words > 0 && (
+          <ResultDisplay title="Reading Time Estimate">
+            <div className="grid grid-cols-3 gap-4 text-center">
+              <div className="p-3 bg-background rounded-lg">
+                <p className="text-2xl font-bold text-primary">{minutes}</p>
+                <p className="text-xs text-muted-foreground">Minutes</p>
+              </div>
+              <div className="p-3 bg-background rounded-lg">
+                <p className="text-2xl font-bold">{words.toLocaleString()}</p>
+                <p className="text-xs text-muted-foreground">Words</p>
+              </div>
+              <div className="p-3 bg-background rounded-lg">
+                <p className="text-2xl font-bold">{pages}</p>
+                <p className="text-xs text-muted-foreground">Pages (est.)</p>
+              </div>
+            </div>
+          </ResultDisplay>
+        )}
+      </div>
+    </ToolLayout>
+  );
+}
+
+interface GradeEntry {
+  id: string;
+  subject: string;
+  grade: string;
+  credits: number;
+  semester: string;
+}
+
+export function GradeTracker() {
+  const tool = getToolById("grade-tracker")!;
+  const [grades, setGrades] = useLocalStorage<GradeEntry[]>("student-grade-tracker", []);
+  const [subject, setSubject] = useState("");
+  const [grade, setGrade] = useState("");
+  const [credits, setCredits] = useState("");
+  const [semester, setSemester] = useState("Fall 2024");
+
+  const gradePoints: Record<string, number> = {
+    "A+": 4.0, "A": 4.0, "A-": 3.7,
+    "B+": 3.3, "B": 3.0, "B-": 2.7,
+    "C+": 2.3, "C": 2.0, "C-": 1.7,
+    "D+": 1.3, "D": 1.0, "D-": 0.7,
+    "F": 0.0
+  };
+
+  const addGrade = () => {
+    if (!subject.trim() || !grade || !credits) return;
+    const entry: GradeEntry = {
+      id: Date.now().toString(),
+      subject: subject.trim(),
+      grade,
+      credits: parseFloat(credits),
+      semester,
+    };
+    setGrades(prev => [...prev, entry]);
+    setSubject("");
+    setGrade("");
+    setCredits("");
+  };
+
+  const deleteGrade = (id: string) => {
+    setGrades(prev => prev.filter(g => g.id !== id));
+  };
+
+  const calculateGPA = (entries: GradeEntry[]) => {
+    let totalPoints = 0;
+    let totalCredits = 0;
+    entries.forEach(e => {
+      const points = gradePoints[e.grade];
+      if (points !== undefined) {
+        totalPoints += points * e.credits;
+        totalCredits += e.credits;
+      }
+    });
+    return totalCredits > 0 ? totalPoints / totalCredits : 0;
+  };
+
+  const overallGPA = calculateGPA(grades);
+  const semesters = [...new Set(grades.map(g => g.semester))];
+
+  return (
+    <ToolLayout tool={tool}>
+      <div className="space-y-6">
+        <div className="p-6 bg-primary/10 rounded-xl text-center">
+          <p className="text-sm text-muted-foreground">Overall GPA</p>
+          <p className="text-5xl font-bold text-primary">{overallGPA.toFixed(2)}</p>
+          <p className="text-sm text-muted-foreground mt-2">
+            {grades.reduce((sum, g) => sum + g.credits, 0)} total credits
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+          <div className="space-y-2">
+            <Label>Subject</Label>
+            <Input value={subject} onChange={(e) => setSubject(e.target.value)} placeholder="e.g., Math" />
+          </div>
+          <div className="space-y-2">
+            <Label>Grade</Label>
+            <Select value={grade} onValueChange={setGrade}>
+              <SelectTrigger>
+                <SelectValue placeholder="Grade" />
+              </SelectTrigger>
+              <SelectContent>
+                {Object.keys(gradePoints).map(g => (
+                  <SelectItem key={g} value={g}>{g}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="space-y-2">
+            <Label>Credits</Label>
+            <Input type="number" value={credits} onChange={(e) => setCredits(e.target.value)} placeholder="3" />
+          </div>
+          <div className="space-y-2">
+            <Label>Semester</Label>
+            <Input value={semester} onChange={(e) => setSemester(e.target.value)} placeholder="Fall 2024" />
+          </div>
+          <div className="space-y-2">
+            <Label>&nbsp;</Label>
+            <Button onClick={addGrade} className="w-full">
+              <Plus className="w-4 h-4 mr-2" /> Add
+            </Button>
+          </div>
+        </div>
+
+        {semesters.map(sem => {
+          const semGrades = grades.filter(g => g.semester === sem);
+          const semGPA = calculateGPA(semGrades);
+          return (
+            <ResultDisplay key={sem} title={`${sem} (GPA: ${semGPA.toFixed(2)})`}>
+              <div className="space-y-2">
+                {semGrades.map(g => (
+                  <div key={g.id} className="flex items-center justify-between p-2 bg-background rounded">
+                    <span>{g.subject}</span>
+                    <div className="flex items-center gap-3">
+                      <span className="font-medium">{g.grade}</span>
+                      <span className="text-muted-foreground text-sm">{g.credits} cr</span>
+                      <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => deleteGrade(g.id)}>
+                        <Trash2 className="w-3 h-3" />
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </ResultDisplay>
+          );
+        })}
+      </div>
+    </ToolLayout>
+  );
+}

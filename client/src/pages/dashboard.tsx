@@ -2,11 +2,11 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { 
-  LayoutDashboard, 
-  Grid3X3, 
-  HelpCircle, 
-  Settings, 
+import {
+  LayoutDashboard,
+  Grid3X3,
+  HelpCircle,
+  Settings,
   Menu,
   X
 } from "lucide-react";
@@ -23,7 +23,7 @@ const sidebarItems = [
   { icon: Settings, label: "Settings", path: "/settings" },
 ];
 
-const categories: ToolCategory[] = ["calculators", "image", "media", "pdf", "student"];
+const categories: ToolCategory[] = ["calculators", "image", "pdf", "media", "student", "text", "finance", "utility"];
 
 export default function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -39,21 +39,20 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-background flex">
       {sidebarOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/50 z-40 lg:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}
 
-      <aside 
-        className={`fixed lg:sticky top-0 left-0 z-50 h-screen w-[280px] bg-sidebar border-r border-sidebar-border flex flex-col transition-transform duration-300 ${
-          sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
-        }`}
+      <aside
+        className={`fixed lg:sticky top-0 left-0 z-50 h-screen w-[280px] bg-sidebar border-r border-sidebar-border flex flex-col transition-transform duration-300 ${sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+          }`}
       >
         <div className="p-4 border-b border-sidebar-border flex items-center justify-between">
           <Link href="/">
             <h1 className="text-xl font-bold font-display">
-              stu<span className="text-primary">DEN</span>t
+              stu<span className="text-primary">DEN</span>t99
             </h1>
           </Link>
           <Button
@@ -86,13 +85,6 @@ export default function Dashboard() {
           })}
         </nav>
 
-        <div className="p-4 border-t border-sidebar-border">
-          <div className="text-xs text-muted-foreground space-y-2">
-            <p>60 Tools</p>
-            <p>No Login Required</p>
-            <p className="text-[11px]">We're launching with Version 1. Ongoing development means some tools will be added or improved soon.</p>
-          </div>
-        </div>
       </aside>
 
       <div className="flex-1 flex flex-col min-w-0">
@@ -125,7 +117,7 @@ export default function Dashboard() {
 
         <main className="flex-1 px-4 sm:px-8 py-8 overflow-auto">
           <div className="max-w-7xl mx-auto">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
@@ -137,32 +129,32 @@ export default function Dashboard() {
               <p className="text-muted-foreground" data-testid="text-date">{currentDate}</p>
             </motion.div>
 
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
               className="mb-8 p-4 bg-muted/50 rounded-lg border border-border"
             >
               <div className="flex items-center gap-4 flex-wrap">
-                <motion.div 
+                <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ delay: 0.3, type: "spring" }}
                   className="text-sm"
                 >
                   <span className="text-muted-foreground">Total Tools:</span>{" "}
-                  <span className="font-semibold text-lg">{tools.length}</span>
+                  <span className="font-semibold text-lg">99</span>
                 </motion.div>
-                <motion.div 
+                <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ delay: 0.4, type: "spring" }}
                   className="text-sm"
                 >
                   <span className="text-muted-foreground">Categories:</span>{" "}
-                  <span className="font-semibold text-lg">5</span>
+                  <span className="font-semibold text-lg">8</span>
                 </motion.div>
-                <motion.div 
+                <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ delay: 0.5, type: "spring" }}

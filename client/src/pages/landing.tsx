@@ -2,17 +2,21 @@ import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { 
-  Zap, 
-  UserX, 
-  Sparkles, 
-  Calculator, 
-  Image, 
-  FileText, 
+import {
+  Zap,
+  UserX,
+  Sparkles,
+  Calculator,
+  Image,
+  FileText,
   GraduationCap,
   Video,
-  ArrowRight
+  ArrowRight,
+  Type,
+  Wallet,
+  Wand2
 } from "lucide-react";
+import { Github, Instagram } from "lucide-react";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { ScrollReactiveBackground } from "@/components/scroll-reactive-background";
 import { CursorAnimation } from "@/components/cursor-animation";
@@ -39,10 +43,13 @@ export default function Landing() {
     { key: "pdf" as const, icon: FileText, count: getToolsByCategory("pdf").length },
     { key: "media" as const, icon: Video, count: getToolsByCategory("media").length },
     { key: "student" as const, icon: GraduationCap, count: getToolsByCategory("student").length },
+    { key: "text" as const, icon: Type, count: getToolsByCategory("text").length },
+    { key: "finance" as const, icon: Wallet, count: getToolsByCategory("finance").length },
+    { key: "utility" as const, icon: Wand2, count: getToolsByCategory("utility").length },
   ];
 
   const features = [
-    { icon: Sparkles, title: "Free Forever", description: "All 60 tools completely free, no hidden costs" },
+    { icon: Sparkles, title: "Free Forever", description: "All 99 tools completely free, no hidden costs" },
     { icon: UserX, title: "No Login Required", description: "Start using tools instantly, no account needed" },
     { icon: Zap, title: "Lightning Fast", description: "Browser-based processing, works offline" },
   ];
@@ -54,10 +61,10 @@ export default function Landing() {
         <div className="max-w-7xl mx-auto px-4 sm:px-8 py-4 flex items-center justify-between gap-4">
           <Link href="/">
             <h1 className="text-2xl font-bold font-display">
-              stu<span className="text-primary">DEN</span>t
+              stu<span className="text-primary">DEN</span>t99
             </h1>
           </Link>
-          
+
           <div className="flex items-center gap-2">
             <ThemeSwitcher />
             <Link href="/dashboard">
@@ -73,7 +80,7 @@ export default function Landing() {
         <section className="min-h-[80vh] flex items-center justify-center px-4 sm:px-8 py-16 relative overflow-hidden">
           <ScrollReactiveBackground />
           <div className="max-w-4xl mx-auto text-center relative z-10">
-            <motion.h2 
+            <motion.h2
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
@@ -82,18 +89,18 @@ export default function Landing() {
               All Student Tools.{" "}
               <span className="text-primary">One Website.</span>
             </motion.h2>
-            
-            <motion.p 
+
+            <motion.p
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-lg sm:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto"
             >
-              Your all-in-one productivity platform with 60 free tools for school and college students. 
+              Your all-in-one productivity platform with 99 free tools for school and college students.
               No login, no subscription, just tools that work.
             </motion.p>
-            
-            <motion.div 
+
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
@@ -107,12 +114,12 @@ export default function Landing() {
               </Link>
               <Link href="/tools">
                 <Button variant="outline" size="lg" className="rounded-full px-8 text-base" data-testid="button-hero-browse">
-                  Browse All 60 Tools
+                  Browse All 99 Tools
                 </Button>
               </Link>
             </motion.div>
 
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.6 }}
@@ -130,14 +137,14 @@ export default function Landing() {
             </motion.div>
           </div>
         </section>
-        
+
         <div className="max-w-7xl mx-auto px-4 sm:px-8 py-4">
           <AdBanner className="mx-auto" />
         </div>
 
         <section className="py-16 px-4 sm:px-8 bg-muted/30">
           <div className="max-w-7xl mx-auto">
-            <motion.h3 
+            <motion.h3
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
@@ -147,7 +154,7 @@ export default function Landing() {
             >
               Why Choose StuDENT?
             </motion.h3>
-            <motion.p 
+            <motion.p
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
@@ -157,8 +164,8 @@ export default function Landing() {
             >
               Built specifically for students who need reliable, fast, and free tools for everyday tasks.
             </motion.p>
-            
-            <motion.div 
+
+            <motion.div
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
@@ -171,7 +178,7 @@ export default function Landing() {
                   <motion.div key={feature.title} variants={fadeInUp}>
                     <Card className="text-center h-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1" data-testid={`card-feature-${feature.title.toLowerCase().replace(/\s+/g, '-')}`}>
                       <CardContent className="pt-8 pb-6">
-                        <motion.div 
+                        <motion.div
                           className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4"
                           whileHover={{ scale: 1.1, rotate: 5 }}
                           transition={{ type: "spring", stiffness: 300 }}
@@ -195,7 +202,7 @@ export default function Landing() {
 
         <section className="py-16 px-4 sm:px-8">
           <div className="max-w-7xl mx-auto">
-            <motion.h3 
+            <motion.h3
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
@@ -204,7 +211,7 @@ export default function Landing() {
             >
               Browse by Category
             </motion.h3>
-            <motion.p 
+            <motion.p
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
@@ -212,10 +219,10 @@ export default function Landing() {
               transition={{ delay: 0.1 }}
               className="text-muted-foreground text-center mb-12 max-w-2xl mx-auto"
             >
-              60 tools organized into 5 categories to help you find exactly what you need.
+              99 tools organized into 8 categories to help you find exactly what you need.
             </motion.p>
-            
-            <motion.div 
+
+            <motion.div
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
@@ -228,12 +235,12 @@ export default function Landing() {
                 return (
                   <motion.div key={cat.key} variants={fadeInUp}>
                     <Link href="/dashboard">
-                      <Card 
+                      <Card
                         className="group cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-[1.03] hover:-translate-y-1"
                         data-testid={`card-category-${cat.key}`}
                       >
                         <CardContent className="pt-6 pb-4 text-center">
-                          <motion.div 
+                          <motion.div
                             className={`w-14 h-14 rounded-xl ${info.color} flex items-center justify-center mx-auto mb-4 text-white`}
                             whileHover={{ rotate: [0, -10, 10, 0] }}
                             transition={{ duration: 0.5 }}
@@ -258,13 +265,13 @@ export default function Landing() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
             <div>
               <h4 className="text-xl font-bold font-display mb-4">
-                stu<span className="text-primary">DEN</span>t
+                stu<span className="text-primary">DEN</span>t99
               </h4>
               <p className="text-muted-foreground text-sm">
-                The ultimate productivity platform for students. 60 free tools to help you succeed in school and college.
+                The ultimate productivity platform for students. 99 free tools to help you succeed in school and college.
               </p>
             </div>
-            
+
             <div>
               <h5 className="font-semibold mb-4">Quick Links</h5>
               <ul className="space-y-2 text-sm">
@@ -280,7 +287,7 @@ export default function Landing() {
                 </li>
               </ul>
             </div>
-            
+
             <div>
               <h5 className="font-semibold mb-4">Legal</h5>
               <ul className="space-y-2 text-sm">
@@ -297,9 +304,31 @@ export default function Landing() {
               </ul>
             </div>
           </div>
-          
-          <div className="pt-8 border-t border-border text-center text-sm text-muted-foreground">
-            <p>&copy; {new Date().getFullYear()} StuDENT. All rights reserved.</p>
+
+          <div className="pt-8 border-t border-border">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+              <p className="text-sm text-muted-foreground">&copy; {new Date().getFullYear()} stuDENt99. All rights reserved.</p>
+              <div className="flex items-center gap-4">
+                <a
+                  href="https://github.com/ravitejabolla756-sys"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                  aria-label="Visit our GitHub"
+                >
+                  <Github className="w-5 h-5" />
+                </a>
+                <a
+                  href="https://www.instagram.com/ravi_teja_bolla/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                  aria-label="Visit our Instagram"
+                >
+                  <Instagram className="w-5 h-5" />
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </footer>
