@@ -309,24 +309,28 @@ export default function Landing() {
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
               <p className="text-sm text-muted-foreground">&copy; {new Date().getFullYear()} stuDENt99. All rights reserved.</p>
               <div className="flex items-center gap-4">
-                <a
+                <motion.a
                   href="https://github.com/ravitejabolla756-sys"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
+                  className="text-muted-foreground hover:text-[#000000] dark:hover:text-white transition-all duration-300"
                   aria-label="Visit our GitHub"
+                  whileHover={{ y: -4, scale: 1.1 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
                 >
                   <Github className="w-5 h-5" />
-                </a>
-                <a
+                </motion.a>
+                <motion.a
                   href="https://www.instagram.com/ravi_teja_bolla/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
+                  className="text-muted-foreground hover:text-[#E4405F] transition-all duration-300"
                   aria-label="Visit our Instagram"
+                  whileHover={{ y: -4, scale: 1.1 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
                 >
                   <Instagram className="w-5 h-5" />
-                </a>
+                </motion.a>
               </div>
             </div>
           </div>
