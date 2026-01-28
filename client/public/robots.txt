@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://student99.me/sitemap.xml
