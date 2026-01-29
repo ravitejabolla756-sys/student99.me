@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "start": "cross-env NODE_ENV=production node dist/index.cjs",
     "check": "tsc",
-    "db:push": "drizzle-kit push"
+    "db:push": "drizzle-kit push",
+    "sitemap": "node scripts/generate-sitemap.js"
   },
   "dependencies": {
     "@ffmpeg/ffmpeg": "^0.12.15",
