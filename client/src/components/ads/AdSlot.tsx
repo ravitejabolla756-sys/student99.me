@@ -1,5 +1,4 @@
-import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
 
 type AdType = "banner" | "sidebar" | "incontent" | "footer";
 
@@ -8,98 +7,76 @@ interface AdSlotProps {
   className?: string;
 }
 
-const adSizes: Record<AdType, { width: string; height: string; mobileHeight: string }> = {
-  banner: { width: "880px", height: "55px", mobileHeight: "55px" },
-  sidebar: { width: "300px", height: "250px", mobileHeight: "250px" },
-  incontent: { width: "100%", height: "120px", mobileHeight: "100px" },
-  footer: { width: "100%", height: "90px", mobileHeight: "60px" }
+const adSizes: Record<AdType, { width: string; height: string }> = {
+  banner: { width: "100%", height: "90px" },
+  sidebar: { width: "300px", height: "250px" },
+  incontent: { width: "100%", height: "250px" },
+  footer: { width: "100%", height: "90px" }
+};
+
+const adSlotIds: Record<AdType, string> = {
+  banner: "1530197644",
+  sidebar: "0987654321",
+  incontent: "1122334455",
+  footer: "5544332211"
 };
 
 export function AdSlot({ type, className = "" }: AdSlotProps) {
-  const adRef = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const adRef = useRef<HTMLModElement>(null);
+  const pushAttempted = useRef(false);
 
   useEffect(() => {
-    setIsMobile(window.innerWidth < 768);
+    if (!adRef.current || pushAttempted.current) return;
 
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    const timeoutId = setTimeout(() => {
+      try {
+        (window as any).adsbygoogle = (window as any).adsbygoogle || [];
+        (window as any).adsbygoogle.push({});
+        pushAttempted.current = true;
+      } catch (err) {
+        console.error("AdSense push error:", err);
+      }
+    }, 100);
+
+    return () => clearTimeout(timeoutId);
   }, []);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setIsVisible(true);
-            // Initialize AdSense ads when visible
-            try {
-              ((window as any).adsbygoogle = (window as any).adsbygoogle || []).push({});
-            } catch (err) {
-              console.error("AdSense error:", err);
-            }
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    if (adRef.current) {
-      observer.observe(adRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
-  // Banner ad slot ID from Google AdSense
-  const adSlotIds: Record<AdType, string> = {
-    banner: "1530197644",      // Banner ads - 880x55
-    sidebar: "0987654321",     // Sidebar ads (300x250)
-    incontent: "1122334455",   // In-content ads (between sections)
-    footer: "5544332211"       // Footer ads
-  };
 
   const size = adSizes[type];
-  const height = isMobile ? size.mobileHeight : size.height;
 
   return (
-    <motion.div
-      ref={adRef}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: isVisible ? 1 : 0 }}
-      transition={{ duration: 0.5 }}
-      className={`relative overflow-hidden rounded-lg bg-muted/30 border border-border/50 ${className}`}
+    <div
+      className={`ad-container ${className}`}
       style={{
+        minHeight: size.height,
         width: size.width,
-        height: height,
-        maxWidth: type === "sidebar" ? size.width : "100%"
+        maxWidth: "100%",
+        position: "relative"
       }}
     >
-      <div className="absolute top-1 left-2 text-[10px] text-muted-foreground/60 uppercase tracking-wider z-10">
+      <div
+        style={{
+          position: "absolute",
+          top: "4px",
+          left: "8px",
+          fontSize: "10px",
+          color: "rgba(128, 128, 128, 0.6)",
+          textTransform: "uppercase",
+          letterSpacing: "0.05em",
+          zIndex: 10
+        }}
+      >
         Sponsored
       </div>
-
-      {isVisible && (
-        <div className="w-full h-full flex items-center justify-center">
-          <ins
-            className="adsbygoogle"
-            style={{ display: "block", width: "100%", height: "100%" }}
-            data-ad-client="ca-pub-5122503324671300"
-            data-ad-slot={adSlotIds[type]}
-            data-ad-format="auto"
-            data-full-width-responsive="true"
-          />
-        </div>
-      )}
-
-      {!isVisible && (
-        <div className="w-full h-full flex items-center justify-center">
-          <div className="text-muted-foreground/40 text-sm">Advertisement</div>
-        </div>
-      )}
-    </motion.div>
+      <ins
+        ref={adRef}
+        className="adsbygoogle"
+        style={{ display: "block", minHeight: size.height }}
+        data-ad-client="ca-pub-5122503324671300"
+        data-ad-slot={adSlotIds[type]}
+        data-ad-format="auto"
+        data-full-width-responsive="true"
+      />
+    </div>
   );
 }
 
